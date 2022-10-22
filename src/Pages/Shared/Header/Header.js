@@ -10,7 +10,13 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import LeftSideNav from "../LeftSideNav/LeftSideNav";
 
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, LogOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    LogOut()
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -36,18 +42,39 @@ const Header = () => {
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">{user?.displayName}</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              {user.photoURL ? (
+            <Nav.Link href="#deets">
+              {user?.uid ? (
+                <>
+                  <span>{user?.displayName}</span>
+                  <button
+                    className="bg-primary ms-3 text-white rounded"
+                    onClick={handleLogOut}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link className="me-3 text-white" to="/login">
+                    Login
+                  </Link>
+                  <Link className="text-white" to="/register">
+                    Register
+                  </Link>
+                </>
+              )}
+            </Nav.Link>
+            <Link to="/profile">
+              {user?.photoURL ? (
                 <Image
                   style={{ width: "30px" }}
                   roundedCircle
-                  src={user.photoURL}
+                  src={user?.photoURL}
                 />
               ) : (
                 <FaUser></FaUser>
               )}
-            </Nav.Link>
+            </Link>
           </Nav>
           <div className="d-lg-none">
             <LeftSideNav></LeftSideNav>
