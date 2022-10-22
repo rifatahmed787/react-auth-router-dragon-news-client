@@ -17,13 +17,16 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:5000/news"),
+        loader: () =>
+          fetch("https://react-auth-router-dragon-news-server.vercel.app/news"),
       },
       {
         path: "/category/:id",
         element: <Category></Category>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/category/${params.id}`),
+          fetch(
+            `https://react-auth-router-dragon-news-server.vercel.app/category/${params.id}`
+          ),
       },
       {
         path: "/news/:id",
@@ -33,7 +36,9 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/news/${params.id}`),
+          fetch(
+            `https://react-auth-router-dragon-news-server.vercel.app/news/${params.id}`
+          ),
       },
       {
         path: "/login",
